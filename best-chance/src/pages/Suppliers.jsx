@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import TopNav from "../components/TopNav";
-import AllProject from "../components/AllProject";
+import AllSuppliers from "../components/AllSuppliers";
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -32,12 +32,10 @@ const Index = () => {
       <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
       {/* Main Content */}
-      <div
-        className="flex-1"
-      >
+      <div className="flex-1">
         <TopNav onToggleSidebar={toggleSidebar} />
         <main className="p-5">
-          <AllProject />
+          <AllSuppliers />
         </main>
       </div>
     </div>
