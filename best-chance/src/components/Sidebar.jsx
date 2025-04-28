@@ -31,7 +31,10 @@ const Sidebar = ({ isOpen, onClose }) => {
         } w-64 z-30 transition-transform duration-300 ease-in-out bg-white border-r border-gray-300 lg:relative lg:translate-x-0`}
       >
         <div className="flex flex-col h-full p-4">
-          <h2 className="text-2xl font-bold my-8 text-center">BestChance</h2>
+          <div className="flex items-center justify-center p-4 my-8 ">
+            <h2 className="text-2xl font-bold text-gray-800">BestChance</h2>
+          </div>
+
           <div className="flex-1 overflow-y-auto">
             <ul className="space-y-2">
               {items.map((item, index) => (
@@ -40,22 +43,22 @@ const Sidebar = ({ isOpen, onClose }) => {
                     onClick={() => {
                       navigate(item.path);
                       // Close sidebar on smaller screens after navigation
-                      if (window.innerWidth < 1025) {
+                      if (window.innerWidth < 1024) {
                         onClose();
                       }
                     }}
-                    className={`flex items-center w-full p-3 rounded-md transition-colors ${
+                    className={`flex items-center w-full p-3 rounded-md transition-all ${
                       location.pathname === item.path
-                        ? "bg-gray-200 font-medium"
-                        : "hover:bg-gray-100"
-                    }`}
+                        ? "bg-gray-100 text-gray-600 font-semibold"
+                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    } ${!item.path ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     <img
                       src={item.img}
                       alt={item.text}
-                      className="w-6 h-6 mr-3"
+                      className="w-6 h-6 mr-3 opacity-70"
                     />
-                    <span className="text-lg">{item.text}</span>
+                    <span className="text-md">{item.text}</span>
                   </button>
                 </li>
               ))}
@@ -67,7 +70,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Overlay for smaller screens */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
+          className="fixed inset-0 z-20 bg-black bg-opacity-50 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}

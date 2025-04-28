@@ -12,9 +12,23 @@ import Vendor from "./pages/Vendor";
 import Supplier from "./pages/Suppliers";
 import Cookies from "js-cookie";
 
+const clearAuthData = () => {
+  // Clear all cookies
+  Object.keys(Cookies.get()).forEach((cookieName) => {
+    Cookies.remove(cookieName);
+  });
+  // Clear localStorage
+  localStorage.clear();
+};
+
 const ProtectedRoute = ({ element }) => {
   const token = Cookies.get("access_token"); // Check for token in cookies
-  return token ? element : <Navigate to="/login" />; // Redirect to login if no token
+  if (!token) {
+    clearAuthData(); // Clear everything if no token exists
+    return <Navigate to="/login" />;
+  }
+
+  return element;
 };
 
 function App() {

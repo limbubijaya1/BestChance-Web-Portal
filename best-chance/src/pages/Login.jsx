@@ -76,7 +76,7 @@ const Login = () => {
         </div>
         <input
           type="text"
-          placeholder="Enter Username"
+          placeholder="輸入用戶名"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="border p-2 mb-4 w-full rounded"
@@ -84,7 +84,7 @@ const Login = () => {
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="Enter Password"
+            placeholder="輸入密碼"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="border p-2 rounded w-full"
@@ -97,14 +97,14 @@ const Login = () => {
             {showPassword ? <LuEyeClosed /> : <LuEye />}
           </button>
         </div>
-        <div className="text-right mb-10 text-[12px]">
+        <div className="text-right mb-10 mt-2 text-[12px]">
           <button
             onClick={() =>
               alert("Forgot Password functionality not implemented")
             }
             className="text-gray-400 underline"
           >
-            Forgot Password?
+            唔記得密碼?
           </button>
           {errorMessage && (
             <div className="mb-4 text-red-500 text-center">{errorMessage}</div>
@@ -115,7 +115,7 @@ const Login = () => {
             onClick={handleLogin}
             className="bg-orange-500 text-white p-2 rounded-[30px] w-[50%]"
           >
-            Login
+            登入
           </button>
         </div>
       </div>
