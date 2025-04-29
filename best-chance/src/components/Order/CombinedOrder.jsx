@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { ClipLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
+import { IoMdArrowBack } from "react-icons/io";
 
-const AllSuppliers = () => {
+const CombinedOrder = () => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const navigate = useNavigate();
 
   const fetchMaterials = async () => {
     const token = Cookies.get("access_token");
@@ -31,7 +34,6 @@ const AllSuppliers = () => {
     fetchMaterials();
   }, []);
 
-  // Improved sorting function
   const requestSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -40,9 +42,7 @@ const AllSuppliers = () => {
     setSortConfig({ key, direction });
   };
 
-  // Get sorted and filtered items
   const getSortedItems = () => {
-    // First group by supplier
     const groupedItems = items.reduce((acc, item) => {
       if (!acc[item.supplier_name]) {
         acc[item.supplier_name] = [];
@@ -51,13 +51,11 @@ const AllSuppliers = () => {
       return acc;
     }, {});
 
-    // Convert to array of suppliers with materials
     let sortableItems = Object.keys(groupedItems).map((supplier) => ({
       supplier,
       materials: [...groupedItems[supplier]],
     }));
 
-    // Apply search filter
     if (searchQuery) {
       sortableItems = sortableItems
         .map(({ supplier, materials }) => {
@@ -67,7 +65,7 @@ const AllSuppliers = () => {
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase()) ||
               item.unit.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              item.unit_price.toString().includes(searchQuery) || // Check unit price as string
+              item.unit_price.toString().includes(searchQuery) ||
               supplier.toLowerCase().includes(searchQuery.toLowerCase())
           );
 
@@ -76,20 +74,17 @@ const AllSuppliers = () => {
             materials: filteredMaterials,
           };
         })
-        .filter(({ materials }) => materials.length > 0); // Keep only suppliers with matching materials
+        .filter(({ materials }) => materials.length > 0);
     }
 
-    // Apply sorting if configured
     if (sortConfig.key) {
       sortableItems.forEach(({ materials }) => {
         materials.sort((a, b) => {
-          // Handle numeric fields differently
           if (sortConfig.key === "unit_price") {
             const aVal = parseFloat(a[sortConfig.key]) || 0;
             const bVal = parseFloat(b[sortConfig.key]) || 0;
             return sortConfig.direction === "asc" ? aVal - bVal : bVal - aVal;
           } else {
-            // Handle string fields
             const aVal = a[sortConfig.key]?.toString().toLowerCase() || "";
             const bVal = b[sortConfig.key]?.toString().toLowerCase() || "";
             if (aVal < bVal) {
@@ -111,7 +106,17 @@ const AllSuppliers = () => {
 
   return (
     <div className="p-4 min-h-[calc(100vh-120px)] bg-gray-100 rounded-lg flex flex-col">
-      <h1 className="text-center font-bold my-6 text-[25px]">所有材料</h1>
+      {/* Header with back button and centered title */}
+      <div className="flex items-center justify-center relative my-6">
+        <button
+          onClick={() => navigate("/")}
+          className="absolute left-0 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-sm"
+        >
+          <IoMdArrowBack className="size-[20px]" />
+        </button>
+        <h1 className="text-center font-bold text-[25px]">所有材料</h1>
+      </div>
+
       <div className="mb-4 flex flex-col items-center gap-2">
         <div className="w-full px-4 sm:px-0 sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] flex gap-2">
           <input
@@ -228,4 +233,4 @@ const AllSuppliers = () => {
   );
 };
 
-export default AllSuppliers;
+export default CombinedOrder;

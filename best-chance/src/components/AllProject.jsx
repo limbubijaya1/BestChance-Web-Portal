@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { ClipLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const AllProject = () => {
   const [items, setItems] = useState([]);
@@ -12,6 +13,7 @@ const AllProject = () => {
     direction: "asc", // Default to ascending order
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const fetchProject = async () => {
     const token = Cookies.get("access_token");
@@ -81,6 +83,10 @@ const AllProject = () => {
     }
     setSortConfig({ field, direction });
     setIsDropdownOpen(false);
+  };
+
+  const handleCardClick = (projectId) => {
+    navigate(`/order/${projectId}`); // Navigate to /order with project ID
   };
 
   const dropdownOptions = [
@@ -166,7 +172,8 @@ const AllProject = () => {
             {sortedAndFilteredItems.map((item) => (
               <div
                 key={item.project_no}
-                className="border border-gray-300 p-4 rounded-md shadow-md bg-white hover:shadow-lg transition-shadow duration-200"
+                className="border border-gray-300 p-4 rounded-md shadow-md bg-white hover:shadow-lg transition-shadow duration-200 cursor-pointer" // Added cursor-pointer
+                onClick={() => handleCardClick(item.project_no)} // Add click handler
               >
                 <h3 className="text-lg font-semibold mb-2">
                   工程编号: {item.project_no}

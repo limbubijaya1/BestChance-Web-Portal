@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Vendor from "./pages/Vendor";
 import Supplier from "./pages/Suppliers";
+import Order from "./pages/Order/CombinedOrderPage";
+import Material from "./pages/Order/MaterialOrderPage";
 import Cookies from "js-cookie";
 
 const clearAuthData = () => {
@@ -43,6 +45,18 @@ function App() {
         <Route
           path="/supplier"
           element={<ProtectedRoute element={<Supplier />} />}
+        />
+        <Route
+          path="/order/:projectID"
+          element={<ProtectedRoute element={<Order />} />}
+        />
+        <Route
+          path="/material/:projectID"
+          element={<ProtectedRoute element={<Material />} />}
+        />
+        <Route
+          path="/fleet/:projectID"
+          element={<ProtectedRoute element={<Order />} />}
         />
         <Route path="/login" element={<Login />} />
       </Routes>
