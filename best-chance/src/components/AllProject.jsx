@@ -175,21 +175,19 @@ const AllProject = () => {
                 className="border border-gray-300 p-4 rounded-md shadow-md bg-white hover:shadow-lg transition-shadow duration-200 cursor-pointer" // Added cursor-pointer
                 onClick={() => handleCardClick(item.project_no)} // Add click handler
               >
-                <h3 className="text-lg font-semibold mb-2">
-                  工程编号: {item.project_no}
+                <h3 className="text-lg font-semibold mb-1 truncate">
+                  <span>工程地点:</span>{" "}
+                  {`${item.project_location.district}, ${item.project_location.street_address}, ${item.project_location.building}`}
                 </h3>
+                <p className="text-gray-600 mb-1">
+                  工程编号: {item.project_no}
+                </p>
                 <p className="text-gray-600 mb-1">
                   <span className="font-medium">聯絡人:</span> {item.contact}
                 </p>
-                <p className="text-gray-600 mb-1">
+                <p className="text-gray-600 ">
                   <span className="font-medium">开始日期:</span>{" "}
                   {item.start_date}
-                </p>
-                <p className="text-gray-600">
-                  <span className="font-medium">工程地点:</span>{" "}
-                  {item.project_location.district},
-                  {item.project_location.street_address},
-                  {item.project_location.building}
                 </p>
               </div>
             ))}

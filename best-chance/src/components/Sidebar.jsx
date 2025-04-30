@@ -31,7 +31,16 @@ const Sidebar = ({ isOpen, onClose }) => {
         } w-64 z-30 transition-transform duration-300 ease-in-out bg-white border-r border-gray-300 lg:relative lg:translate-x-0`}
       >
         <div className="flex flex-col h-full p-4">
-          <div className="flex items-center justify-center p-4 my-8 ">
+          <div
+            className="flex items-center justify-center p-4 my-8 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+            onClick={() => {
+              navigate("/");
+              // Close sidebar on smaller screens after navigation
+              if (window.innerWidth < 1024) {
+                onClose();
+              }
+            }}
+          >
             <h2 className="text-2xl font-bold text-gray-800">BestChance</h2>
           </div>
 

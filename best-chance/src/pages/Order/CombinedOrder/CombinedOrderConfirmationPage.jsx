@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import OrderSidebar from "../../components/Order/OrderSidebar";
-import TopNav from "../../components/TopNav";
-import CombinedOrder from "../../components/Order/CombinedOrder";
+import OrderSidebar from "../../../components/Order/OrderSidebar";
+import TopNav from "../../../components/TopNav";
+import CombinedOrder from "../../../components/Order/CombinedOrder/CombinedOrderConfirmation";
 import { useParams } from "react-router-dom";
 
-const Index = () => {
+const CombinedOrderConfirmationPage = () => {
   const { projectID } = useParams();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -44,4 +44,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default CombinedOrderConfirmationPage;

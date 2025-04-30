@@ -10,8 +10,12 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Vendor from "./pages/Vendor";
 import Supplier from "./pages/Suppliers";
-import Order from "./pages/Order/CombinedOrderPage";
-import Material from "./pages/Order/MaterialOrderPage";
+import CombinedOrderMaterial from "./pages/Order/CombinedOrder/CombinedOrderMaterialPage";
+import CombinedOrderFleet from "./pages/Order/CombinedOrder/CombinedOrderFleetPage";
+import CombinedOrderConfirmation from "./pages/Order/CombinedOrder/CombinedOrderConfirmationPage";
+import Material from "./pages/Order/Material/MaterialOrderPage";
+import MaterialConfirmation from "./pages/Order/Material/MaterialOrderConfirmationPage"
+import Fleet from "./pages/Order/FleetOrderPage";
 import Cookies from "js-cookie";
 
 const clearAuthData = () => {
@@ -48,15 +52,27 @@ function App() {
         />
         <Route
           path="/order/:projectID"
-          element={<ProtectedRoute element={<Order />} />}
+          element={<ProtectedRoute element={<CombinedOrderMaterial />} />}
+        />
+        <Route
+          path="/order-next/:projectID"
+          element={<ProtectedRoute element={<CombinedOrderFleet />} />}
+        />
+        <Route
+          path="/order-confirmation/:projectID"
+          element={<ProtectedRoute element={<CombinedOrderConfirmation />} />}
         />
         <Route
           path="/material/:projectID"
           element={<ProtectedRoute element={<Material />} />}
         />
         <Route
+          path="/material-confirmation/:projectID"
+          element={<ProtectedRoute element={<MaterialConfirmation />} />}
+        />
+        <Route
           path="/fleet/:projectID"
-          element={<ProtectedRoute element={<Order />} />}
+          element={<ProtectedRoute element={<Fleet />} />}
         />
         <Route path="/login" element={<Login />} />
       </Routes>

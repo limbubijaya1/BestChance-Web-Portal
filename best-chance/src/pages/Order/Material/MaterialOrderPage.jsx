@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import OrderSidebar from "../../components/Order/OrderSidebar";
-import TopNav from "../../components/TopNav";
-import MaterialOrder from "../../components/Order/MaterialOrder";
+import OrderSidebar from "../../../components/Order/OrderSidebar";
+import TopNav from "../../../components/TopNav";
+import MaterialOrder from "../../../components/Order/Material/MaterialOrder";
 import { useParams } from "react-router-dom";
 
-const Index = () => {
+const MaterialOrderPage = () => {
   const { projectID } = useParams();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -44,4 +44,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default MaterialOrderPage;
