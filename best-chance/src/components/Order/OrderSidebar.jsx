@@ -10,7 +10,8 @@ const Sidebar = ({ isOpen, onClose }) => {
   const items = [
     { text: "訂單合併", path: `/order/${projectID}` },
     { text: "訂購材料", path: `/material/${projectID}` },
-    { text: "訂購車隊", path: `/fleet/${projectID}` },
+    { text: "營運成本", path: `/operational-fee/${projectID}` },
+    { text: "項目開支", path: `/project-expense/${projectID}` },
   ];
 
   // Function to determine if the "訂單合併" item should be active

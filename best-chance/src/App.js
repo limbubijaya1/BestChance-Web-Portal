@@ -15,6 +15,8 @@ import CombinedOrderFleet from "./pages/Order/CombinedOrder/CombinedOrderFleetPa
 import CombinedOrderConfirmation from "./pages/Order/CombinedOrder/CombinedOrderConfirmationPage";
 import Material from "./pages/Order/Material/MaterialOrderPage";
 import MaterialConfirmation from "./pages/Order/Material/MaterialOrderConfirmationPage"
+import OperationalFee from "./pages/Order/OperationalFeePage"
+import ProjectExpense from "./pages/Order/ProjectExpensePage"
 import Fleet from "./pages/Order/FleetOrderPage";
 import Cookies from "js-cookie";
 
@@ -73,6 +75,14 @@ function App() {
         <Route
           path="/fleet/:projectID"
           element={<ProtectedRoute element={<Fleet />} />}
+        />
+        <Route
+          path="/operational-fee/:projectID"
+          element={<ProtectedRoute element={<OperationalFee />} />}
+        />
+        <Route
+          path="/project-expense/:projectID"
+          element={<ProtectedRoute element={<ProjectExpense />} />}
         />
         <Route path="/login" element={<Login />} />
       </Routes>
