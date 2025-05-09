@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Vendor from "./pages/Vendor";
 import Supplier from "./pages/Suppliers";
+import CostAnalysis from "./pages/CostAnalysis";
 import CombinedOrderMaterial from "./pages/Order/CombinedOrder/CombinedOrderMaterialPage";
 import CombinedOrderFleet from "./pages/Order/CombinedOrder/CombinedOrderFleetPage";
 import CombinedOrderConfirmation from "./pages/Order/CombinedOrder/CombinedOrderConfirmationPage";
@@ -51,6 +52,10 @@ function App() {
         <Route
           path="/supplier"
           element={<ProtectedRoute element={<Supplier />} />}
+        />
+        <Route
+          path="/cost-analysis"
+          element={<ProtectedRoute element={<CostAnalysis />} />}
         />
         <Route
           path="/order/:projectID"

@@ -10,7 +10,9 @@ const MaterialOrderConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { projectID } = useParams();
-  const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [dateError, setDateError] = useState("");
   const [success, setSuccess] = useState(false); // State for success popup
   const [error, setError] = useState(null); // State for error message
@@ -71,7 +73,7 @@ const MaterialOrderConfirmation = () => {
     try {
       const token = Cookies.get("access_token");
       const response = await axios.post(
-        `http://34.44.189.201/order-material/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/order-material/${projectID}`,
         requestBody,
         {
           headers: {

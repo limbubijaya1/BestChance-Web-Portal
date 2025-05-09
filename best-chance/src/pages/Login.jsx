@@ -16,13 +16,13 @@ const Login = () => {
 
     // Validate input fields
     if (!username || !password) {
-      setErrorMessage("Please enter both username and password.");
+      setErrorMessage("請同時輸入用戶名同密碼");
       return; // Stop execution if validation fails
     }
 
     try {
       const response = await axios.post(
-        "http://34.44.189.201/token",
+        "https://bestchance-accounting-cui.virpluz.io/token",
         new URLSearchParams({
           grant_type: "password",
           username: username,
@@ -42,12 +42,15 @@ const Login = () => {
       Cookies.set("access_token", access_token, { expires: 7 });
 
       try {
-        const response = await axios.get("http://34.44.189.201/users/me", {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://bestchance-accounting-cui.virpluz.io/users/me",
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
         localStorage.setItem("username", response.data.username);
         navigate("/");
       } catch (error) {
@@ -58,12 +61,10 @@ const Login = () => {
       console.error("Login failed:", error);
       if (error.response && error.response.data) {
         setErrorMessage(
-          error.response.data.message || "Login failed. Please try again."
+          error.response.data.message || "登入失敗咗, 請試多一次"
         );
       } else {
-        setErrorMessage(
-          "Login failed. Please check your credentials and try again."
-        );
+        setErrorMessage("登入失敗, 請檢查你嘅憑證，然後再試一次");
       }
     }
   };
@@ -72,7 +73,9 @@ const Login = () => {
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="bg-white rounded-[10px] shadow-lg p-8 w-96">
         <div className="flex justify-center my-8">
-          <h1 className="text-[25px] font-bold text-center mb-6">BestChance</h1>
+          <h1 className="text-[25px] font-bold text-center mb-6">
+            Best Chance
+          </h1>
         </div>
         <input
           type="text"
@@ -116,6 +119,16 @@ const Login = () => {
             className="bg-orange-500 text-white p-2 rounded-[30px] w-[50%]"
           >
             登入
+          </button>
+        </div>
+
+        <div className="mt-6 text-center">
+          <span className="text-sm text-gray-600">還沒有帳戶?</span>
+          <button
+            onClick={() => alert("請聯絡 Virpluz 以建立新帳戶")}
+            className="ml-1 text-sm text-blue-600 hover:underline"
+          >
+            註冊新帳戶
           </button>
         </div>
       </div>

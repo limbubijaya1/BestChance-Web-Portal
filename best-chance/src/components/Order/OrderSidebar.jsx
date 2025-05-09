@@ -41,7 +41,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       >
         <div className="flex flex-col h-full p-4">
           <div
-            className="flex items-center justify-center p-4 my-8 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+            className="flex items-center justify-start p-4 my-8 cursor-pointer hover:opacity-80 transition-opacity duration-200"
             onClick={() => {
               navigate(`/`);
               // Close sidebar on smaller screens after navigation
@@ -50,7 +50,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               }
             }}
           >
-            <h2 className="text-2xl font-bold text-gray-800">BestChance</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Best Chance</h2>
           </div>
 
           <div className="flex-1 overflow-y-auto">

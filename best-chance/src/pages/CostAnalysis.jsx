@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import OrderSidebar from "../../components/Order/OrderSidebar";
-import TopNav from "../../components/TopNav";
-import ProjectExpense from "../../components/Order/ProjectExpense/ProjectExpense";
+import Sidebar from "../components/Sidebar";
+import TopNav from "../components/TopNav";
+import AllCostAnalysis from "../components/AllCostAnalysis";
 
-const ProjectExpensePage = () => {
+const CostAnalysis = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -29,17 +29,17 @@ const ProjectExpensePage = () => {
 
   return (
     <div className="flex min-h-screen">
-      <OrderSidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
+      <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
       {/* Main Content */}
       <div className="flex-1">
         <TopNav onToggleSidebar={toggleSidebar} />
         <main className="p-5">
-          <ProjectExpense />
+          <AllCostAnalysis />
         </main>
       </div>
     </div>
   );
 };
 
-export default ProjectExpensePage;
+export default CostAnalysis;

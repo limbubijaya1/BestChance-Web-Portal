@@ -15,18 +15,24 @@ const MaterialOrder = () => {
   const [quantities, setQuantities] = useState({});
   const navigate = useNavigate();
   const { projectID } = useParams();
-  const location = useLocation(); // Use useLocation
+  const location = useLocation();
+  const [selectedSupplier, setSelectedSupplier] = useState(null);
+  const [showSupplierWarning, setShowSupplierWarning] = useState(false);
+  const [attemptedSupplier, setAttemptedSupplier] = useState(null);
 
   const fetchMaterials = async () => {
     const token = Cookies.get("access_token");
     setLoading(true);
     try {
-      const response = await axios.get("http://34.44.189.201/read-material", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      });
+      const response = await axios.get(
+        "https://bestchance-accounting-cui.virpluz.io/read-material",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
       setItems(response.data.all_material);
     } catch (error) {
       console.error("Error fetching materials:", error);
@@ -125,26 +131,50 @@ const MaterialOrder = () => {
   const sortedItems = getSortedItems();
 
   const handleCheckboxChange = (material) => {
-    setSelectedItems((prevSelected) => {
-      const isSelected = prevSelected.some(
-        (item) => item.material_name === material.material_name
-      );
-      const newQuantities = { ...quantities };
+    const currentSupplier = material.supplier_name;
 
-      if (isSelected) {
-        delete newQuantities[material.material_name];
-        setQuantities(newQuantities);
-        return prevSelected.filter(
-          (item) => item.material_name !== material.material_name
-        );
-      } else {
-        setQuantities({
-          ...newQuantities,
-          [material.material_name]: 1,
-        });
-        return [...prevSelected, material];
+    const isSelected = selectedItems.some(
+      (item) => item.material_name === material.material_name
+    );
+
+    if (!isSelected) {
+      if (selectedSupplier && selectedSupplier !== currentSupplier) {
+        setAttemptedSupplier(currentSupplier);
+        setShowSupplierWarning(true);
+        return;
       }
-    });
+
+      // Allow adding the material
+      setSelectedItems((prevSelected) => [...prevSelected, material]);
+      setQuantities((prev) => ({
+        ...prev,
+        [material.material_name]: 1,
+      }));
+      if (!selectedSupplier) {
+        setSelectedSupplier(currentSupplier);
+      }
+    } else {
+      // Deselecting
+      setSelectedItems((prevSelected) =>
+        prevSelected.filter(
+          (item) => item.material_name !== material.material_name
+        )
+      );
+      setQuantities((prevQuantities) => {
+        const newQuantities = { ...prevQuantities };
+        delete newQuantities[material.material_name];
+        return newQuantities;
+      });
+
+      // Reset selected supplier if all materials are deselected
+      if (
+        selectedItems.filter(
+          (item) => item.material_name !== material.material_name
+        ).length === 0
+      ) {
+        setSelectedSupplier(null);
+      }
+    }
   };
 
   const handleQuantityChange = (material, value) => {
@@ -314,6 +344,30 @@ const MaterialOrder = () => {
             </div>
           )}
         </>
+      )}
+
+      {showSupplierWarning && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-md shadow-lg text-center max-w-[90%]">
+            <p className="text-red-600 font-semibold mb-4">
+              一次只能選擇一個供應商的材料！
+            </p>
+            <p className="mb-2 text-gray-700">
+              目前已選供應商：
+              <span className="font-semibold">{selectedSupplier}</span>
+            </p>
+            <p className="mb-4 text-gray-700">
+              嘗試選擇的供應商：
+              <span className="font-semibold">{attemptedSupplier}</span>
+            </p>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              onClick={() => setShowSupplierWarning(false)}
+            >
+              確定
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

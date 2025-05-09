@@ -11,12 +11,13 @@ const CombinedOrderConfirmation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { projectID } = useParams();
-  const [deliveryDate, setDeliveryDate] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [dateError, setDateError] = useState("");
   const [startingLocation, setStartingLocation] = useState("");
   const [locationError, setLocationError] = useState("");
-
-  // New states for success, error, and loading
+  const [supplierLocations, setSupplierLocations] = useState([]);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -30,17 +31,34 @@ const CombinedOrderConfirmation = () => {
   const [selectedFleet, setSelectedFleet] = useState(
     location.state?.selectedFleet || null
   );
-  const [startingLocationState, setStartingLocationState] = useState(
-    location.state?.startingLocation || ""
-  );
-  const [deliveryDateState, setDeliveryDateState] = useState(
-    location.state?.deliveryDate || ""
-  );
+
+  const fetchLocations = async () => {
+    try {
+      const token = Cookies.get("access_token");
+      const res = await axios.get(
+        "https://bestchance-accounting-cui.virpluz.io/read-all-supplier-locations",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSupplierLocations(res.data.all_fleet);
+    } catch (error) {
+      console.error("Failed to fetch locations", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLocations();
+  }, []);
 
   useEffect(() => {
     if (location.state) {
       setStartingLocation(location.state.startingLocation || "");
-      setDeliveryDate(location.state.deliveryDate || "");
+      if (location.state.deliveryDate) {
+        setDeliveryDate(location.state.deliveryDate);
+      }
     }
   }, [location.state]);
 
@@ -69,7 +87,7 @@ const CombinedOrderConfirmation = () => {
 
   const handleConfirm = async () => {
     if (!startingLocation) {
-      setLocationError("請輸入起運地點");
+      setLocationError("請揀出發地點");
       return;
     }
 
@@ -94,7 +112,6 @@ const CombinedOrderConfirmation = () => {
       fleetPrice = selectedFleet.unit_price;
     }
 
-    // Construct the request body according to the specified format
     const requestBody = {
       starting_location: startingLocation,
       driver_name: driverName,
@@ -111,7 +128,7 @@ const CombinedOrderConfirmation = () => {
     try {
       const token = Cookies.get("access_token");
       const response = await axios.post(
-        `http://34.44.189.201/order-fleet/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/order-fleet-with-materials/${projectID}`,
         requestBody,
         {
           headers: {
@@ -137,8 +154,6 @@ const CombinedOrderConfirmation = () => {
         selectedMaterials: selectedMaterials,
         quantities: quantities,
         selectedFleet: selectedFleet,
-        startingLocation: startingLocation,
-        deliveryDate: deliveryDate,
       },
     });
   };
@@ -165,16 +180,21 @@ const CombinedOrderConfirmation = () => {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <FaMapMarkerAlt className="text-gray-400" />
                 </div>
-                <input
-                  type="text"
-                  placeholder="請輸入起運地點"
+                <select
                   value={startingLocation}
                   onChange={(e) => {
                     setStartingLocation(e.target.value);
                     setLocationError("");
                   }}
                   className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                />
+                >
+                  <option value="">請選擇起始地點</option>
+                  {supplierLocations.map((loc, index) => (
+                    <option key={index} value={loc.supplier_location}>
+                      {loc.supplier_location}
+                    </option>
+                  ))}
+                </select>
               </div>
               {locationError && (
                 <p className="mt-1 text-sm text-red-600">{locationError}</p>

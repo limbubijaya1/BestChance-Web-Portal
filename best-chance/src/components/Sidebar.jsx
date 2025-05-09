@@ -15,8 +15,8 @@ const Sidebar = ({ isOpen, onClose }) => {
   const items = [
     { img: ProjectImage, text: "工程項目", path: "/" },
     { img: SupplierImage, text: "供應商", path: "/supplier" },
-    { img: VendorImage, text: "判項", path: "/vendor" },
-    { img: CostAnalysisImage, text: "成本分析" },
+    { img: VendorImage, text: "車手", path: "/vendor" },
+    { img: CostAnalysisImage, text: "成本分析", path: "/cost-analysis" },
     { img: QuotationImage, text: "報價" },
     { img: InvoiceImage, text: "發票" },
     { img: FundingImage, text: "資金" },
@@ -32,7 +32,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       >
         <div className="flex flex-col h-full p-4">
           <div
-            className="flex items-center justify-center p-4 my-8 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+            className="flex items-center justify-start p-4 my-8 cursor-pointer hover:opacity-80 transition-opacity duration-200"
             onClick={() => {
               navigate("/");
               // Close sidebar on smaller screens after navigation
@@ -41,7 +41,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               }
             }}
           >
-            <h2 className="text-2xl font-bold text-gray-800">BestChance</h2>
+            <h2 className="text-2xl font-bold text-gray-800 ">Best Chance</h2>
           </div>
 
           <div className="flex-1 overflow-y-auto">

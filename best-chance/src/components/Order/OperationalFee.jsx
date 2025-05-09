@@ -4,7 +4,9 @@ import Cookies from "js-cookie";
 import { ClipLoader } from "react-spinners";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoMdArrowBack, IoMdClose, IoMdCheckmark } from "react-icons/io";
-import { FiSearch, FiPlus } from "react-icons/fi";
+import { SlOptionsVertical } from "react-icons/sl";
+import ConfirmDeleteModal from "../ConfirmDeleteModal";
+import EditProjectExpenseModal from "./ProjectExpense/EditProjectExpenseModal";
 
 const OperationalFee = () => {
   const [expenses, setExpenses] = useState([]);
@@ -25,13 +27,18 @@ const OperationalFee = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { projectID } = useParams();
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [expenseToDelete, setExpenseToDelete] = useState(null);
 
   const fetchOperationExpenses = useCallback(async () => {
     const token = Cookies.get("access_token");
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://34.44.189.201/read-project-expenses/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/read-project-expenses/${projectID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +46,6 @@ const OperationalFee = () => {
           },
         }
       );
-
       const groupedExpenses = response.data.grouped_expenses;
       const operationGroup = groupedExpenses.find(
         (group) => group.expense_type === "operation"
@@ -63,6 +69,28 @@ const OperationalFee = () => {
       setLoading(false);
     }
   }, [projectID]);
+
+  const handleDeleteExpense = async () => {
+    const token = Cookies.get("access_token");
+    try {
+      await axios.delete(
+        "https://bestchance-accounting-cui.virpluz.io/delete-expense-items",
+        {
+          data: {
+            each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+      fetchOperationExpenses(); // Refresh the list
+      setIsDeleteModalOpen(false);
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+    }
+  };
 
   useEffect(() => {
     fetchOperationExpenses();
@@ -121,7 +149,7 @@ const OperationalFee = () => {
 
     try {
       await axios.post(
-        `http://34.44.189.201/order-operation/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/order-operation/${projectID}`,
         {
           expense_name: newExpense.expense_name,
           unit_price: newExpense.unit_price,
@@ -251,6 +279,7 @@ const OperationalFee = () => {
                           )}
                         </div>
                       </th>
+                      <th className="px-2 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[100px] whitespace-nowrap cursor-pointer hover:bg-gray-100"></th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -264,6 +293,50 @@ const OperationalFee = () => {
                         </td>
                         <td className="px-2 py-4 text-center text-sm text-gray-500 whitespace-nowrap">
                           ${expense.unit_price}
+                        </td>
+                        <td className="px-4 py-4 text-center relative">
+                          <button
+                            onClick={(e) =>
+                              setOpenDropdownId(
+                                openDropdownId === expense.each_expense_id
+                                  ? null
+                                  : expense.each_expense_id
+                              )
+                            }
+                          >
+                            <SlOptionsVertical className="text-gray-600 hover:text-black" />
+                          </button>
+                          {openDropdownId === expense.each_expense_id && (
+                            <div className="absolute right-0 mt-2 w-32 bg-white border rounded shadow z-10">
+                              <button
+                                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                                onClick={() => {
+                                  setSelectedExpense({
+                                    each_expense_id: expense.each_expense_id,
+                                    expense_name: expense.expense_name,
+                                    unit_price: expense.unit_price,
+                                  });
+                                  setIsEditModalOpen(true);
+                                  setOpenDropdownId(null);
+                                }}
+                              >
+                                編輯
+                              </button>
+                              <button
+                                className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-100"
+                                onClick={() => {
+                                  setExpenseToDelete({
+                                    id: expense.each_expense_id,
+                                    name: expense.expense_name,
+                                  });
+                                  setIsDeleteModalOpen(true);
+                                  setOpenDropdownId(null);
+                                }}
+                              >
+                                刪除
+                              </button>
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -394,6 +467,23 @@ const OperationalFee = () => {
             <p className="text-gray-700">{error}</p>
           </div>
         </div>
+      )}
+
+      {selectedExpense && (
+        <EditProjectExpenseModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          expense={selectedExpense}
+          onSuccess={fetchOperationExpenses}
+        />
+      )}
+
+      {isDeleteModalOpen && (
+        <ConfirmDeleteModal
+          productName={expenseToDelete.name}
+          onConfirm={handleDeleteExpense}
+          onCancel={() => setIsDeleteModalOpen(false)}
+        />
       )}
     </div>
   );

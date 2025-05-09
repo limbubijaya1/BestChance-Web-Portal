@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import TopNav from "../components/TopNav";
-import AllProject from "../components/AllProject";
+import AllProject from "../components/Project/AllProject";
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

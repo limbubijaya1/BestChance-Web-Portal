@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import TopNav from "../components/TopNav";
-import AllSuppliers from "../components/AllSuppliers";
+import AllSuppliers from "../components/Material/AllSuppliers";
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
