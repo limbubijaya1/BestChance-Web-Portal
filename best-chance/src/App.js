@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.css";
-import Index from "./pages/Index";
+import Index from "./pages/index";
 import Login from "./pages/Login";
 import Vendor from "./pages/Vendor";
 import Supplier from "./pages/Suppliers";
