@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 import { ClipLoader } from "react-spinners";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
-import { FiSearch } from "react-icons/fi";
 
 const MaterialOrder = () => {
   const [items, setItems] = useState([]);
@@ -24,15 +23,12 @@ const MaterialOrder = () => {
     const token = Cookies.get("access_token");
     setLoading(true);
     try {
-      const response = await axios.get(
-        "https://bestchance-accounting-cui.virpluz.io/read-material",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      const response = await axios.get("http://34.44.189.201/read-material", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       setItems(response.data.all_material);
     } catch (error) {
       console.error("Error fetching materials:", error);

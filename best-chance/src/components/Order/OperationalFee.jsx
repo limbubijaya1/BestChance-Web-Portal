@@ -38,7 +38,7 @@ const OperationalFee = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://bestchance-accounting-cui.virpluz.io/read-project-expenses/${projectID}`,
+        `http://34.44.189.201/read-project-expenses/${projectID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -73,18 +73,15 @@ const OperationalFee = () => {
   const handleDeleteExpense = async () => {
     const token = Cookies.get("access_token");
     try {
-      await axios.delete(
-        "https://bestchance-accounting-cui.virpluz.io/delete-expense-items",
-        {
-          data: {
-            each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      await axios.delete("http://34.44.189.201/delete-expense-items", {
+        data: {
+          each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       fetchOperationExpenses(); // Refresh the list
       setIsDeleteModalOpen(false);
     } catch (error) {
@@ -129,11 +126,11 @@ const OperationalFee = () => {
     if (!newExpense.unit_price) {
       newErrors.unit_price = "請輸入價格";
       valid = false;
-    } else if (
-      isNaN(parseFloat(newExpense.unit_price)) ||
-      parseFloat(newExpense.unit_price) <= 0
-    ) {
-      newErrors.unit_price = "請輸入有效的價格";
+    } else if (isNaN(newExpense.unit_price)) {
+      newErrors.unit_price = "單價必須為數字";
+      valid = false;
+    } else if (newExpense.unit_price <= 0) {
+      newErrors.unit_price = "單價唔可以小於或等於零";
       valid = false;
     }
 
@@ -149,7 +146,7 @@ const OperationalFee = () => {
 
     try {
       await axios.post(
-        `https://bestchance-accounting-cui.virpluz.io/order-operation/${projectID}`,
+        `http://34.44.189.201/order-operation/${projectID}`,
         {
           expense_name: newExpense.expense_name,
           unit_price: newExpense.unit_price,
@@ -225,7 +222,7 @@ const OperationalFee = () => {
         >
           <IoMdArrowBack className="size-[20px]" />
         </button>
-        <h1 className="text-center font-bold text-[25px]">營運成本</h1>
+        <h1 className="text-center font-bold text-[25px]">營運費用</h1>
       </div>
 
       <div className="mb-4 flex flex-col items-center gap-2">
@@ -385,7 +382,7 @@ const OperationalFee = () => {
                     className={`w-full px-3 py-2 border ${
                       errors.expense_name ? "border-red-500" : "border-gray-300"
                     } rounded-md focus:ring-blue-500 focus:border-blue-500`}
-                    placeholder="輸入費用名稱"
+                    placeholder="輸入費用名稱，例如公證費、垃圾處理費"
                   />
                   {errors.expense_name && (
                     <p className="mt-1 text-sm text-red-600">
@@ -399,9 +396,7 @@ const OperationalFee = () => {
                     價格 (HKD) <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="number"
-                    min="0"
-                    step="0.01"
+                    type="text"
                     value={newExpense.unit_price}
                     onChange={(e) => {
                       setNewExpense({
@@ -413,7 +408,7 @@ const OperationalFee = () => {
                     className={`w-full px-3 py-2 border ${
                       errors.unit_price ? "border-red-500" : "border-gray-300"
                     } rounded-md focus:ring-blue-500 focus:border-blue-500`}
-                    placeholder="輸入價格"
+                    placeholder="輸入價格，例:100.50"
                   />
                   {errors.unit_price && (
                     <p className="mt-1 text-sm text-red-600">

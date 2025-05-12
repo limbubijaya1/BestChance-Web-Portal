@@ -50,7 +50,7 @@ const AddSupplierModal = ({ visible, onClose, onSuccess }) => {
 
     try {
       await axios.post(
-        "https://bestchance-accounting-cui.virpluz.io/add-supplier",
+        "http://34.44.189.201/add-supplier",
         {
           company_name: supplierData.company_name,
           supplier_type: supplierData.supplier_type,

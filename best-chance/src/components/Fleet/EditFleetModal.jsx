@@ -42,6 +42,8 @@ const EditFleetModal = ({
       newErrors.unit_price = "單價不能為空";
     } else if (isNaN(originalData.unit_price)) {
       newErrors.unit_price = "單價必須為數字";
+    } else if (originalData.unit_price <= 0) {
+      newErrors.unit_price = "單價唔可以小於或等於零";
     }
 
     setErrors(newErrors);
@@ -90,7 +92,7 @@ const EditFleetModal = ({
       };
 
       await axios.patch(
-        `https://bestchance-accounting-cui.virpluz.io/update-fleet/${currentEdit.id}`,
+        `http://34.44.189.201/update-fleet/${currentEdit.id}`,
         fleetData,
         {
           headers: {
@@ -133,6 +135,7 @@ const EditFleetModal = ({
             <div key={key}>
               <label className="block mb-2">{label}</label>
               <input
+                type="text"
                 value={originalData?.[key] || ""}
                 onChange={(e) =>
                   setOriginalData({ ...originalData, [key]: e.target.value })

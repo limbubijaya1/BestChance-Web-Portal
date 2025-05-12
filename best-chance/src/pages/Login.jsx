@@ -22,7 +22,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://bestchance-accounting-cui.virpluz.io/token",
+        "http://34.44.189.201/token",
         new URLSearchParams({
           grant_type: "password",
           username: username,
@@ -42,15 +42,12 @@ const Login = () => {
       Cookies.set("access_token", access_token, { expires: 7 });
 
       try {
-        const response = await axios.get(
-          "https://bestchance-accounting-cui.virpluz.io/users/me",
-          {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${access_token}`,
-            },
-          }
-        );
+        const response = await axios.get("http://34.44.189.201/users/me", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
         localStorage.setItem("username", response.data.username);
         navigate("/");
       } catch (error) {

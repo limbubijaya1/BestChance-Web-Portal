@@ -71,7 +71,7 @@ const EditProjectModal = ({ isOpen, onClose, project, onSuccess }) => {
 
     try {
       const response = await axios.patch(
-        `https://bestchance-accounting-cui.virpluz.io/update-project/${project.project_no}`,
+        `http://34.44.189.201/update-project/${project.project_no}`,
         formData,
         {
           headers: {
@@ -131,7 +131,7 @@ const EditProjectModal = ({ isOpen, onClose, project, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
+      <div className="bg-white rounded-lg p-6 w-[90vw] sm:w-full max-w-md">
         <h2 className="text-xl font-bold mb-4 justify-center flex">編輯項目</h2>
         <form onSubmit={handleSubmit}>
           {Object.keys(formData).map((field) => (

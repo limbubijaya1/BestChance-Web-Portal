@@ -36,7 +36,14 @@ const AddFleetModal = ({ open, onClose, onSuccess }) => {
     }
     if (!formData.driving_plate.trim())
       newErrors.driving_plate = "車牌號碼不能為空";
-    if (!formData.unit_price.trim()) newErrors.unit_price = "單價不能為空";
+
+    if (!formData.unit_price.trim()) {
+      newErrors.unit_price = "單價不能為空";
+    } else if (isNaN(formData.unit_price)) {
+      newErrors.unit_price = "單價必須為數字";
+    } else if (formData.unit_price <= 0) {
+      newErrors.unit_price = "單價唔可以小於或等於零";
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setValidationErrors(newErrors);
@@ -46,16 +53,12 @@ const AddFleetModal = ({ open, onClose, onSuccess }) => {
 
     try {
       const token = Cookies.get("access_token");
-      await axios.post(
-        "https://bestchance-accounting-cui.virpluz.io/add-fleet",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      await axios.post("http://34.44.189.201/add-fleet", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       setSuccess(true);
       onSuccess();
       setTimeout(() => {
@@ -99,7 +102,7 @@ const AddFleetModal = ({ open, onClose, onSuccess }) => {
                 className={`border p-2 rounded w-full ${
                   validationErrors[name] ? "border-red-500" : ""
                 }`}
-                type={name === "unit_price" ? "number" : "text"}
+                type="text"
               />
               {validationErrors[name] && (
                 <p className="text-red-500 text-sm mt-1">

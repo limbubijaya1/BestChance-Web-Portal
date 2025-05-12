@@ -37,8 +37,12 @@ const AddMaterialModal = ({ visible, onClose, onSuccess, initialData }) => {
     if (!formData.unit) {
       newErrors.unit = "單位不能為空";
     }
-    if (!formData.unit_price || formData.unit_price <= 0) {
-      newErrors.unit_price = "單價不能為空或小於等於零";
+    if (!formData.unit_price?.toString().trim()) {
+      newErrors.unit_price = "單價不能為空";
+    } else if (isNaN(formData.unit_price)) {
+      newErrors.unit_price = "單價必須為數字";
+    } else if (formData.unit_price <= 0) {
+      newErrors.unit_price = "單價唔可以小於或等於零";
     }
 
     // If any errors exist, prevent submission
@@ -55,7 +59,7 @@ const AddMaterialModal = ({ visible, onClose, onSuccess, initialData }) => {
 
     try {
       const response = await axios.post(
-        "https://bestchance-accounting-cui.virpluz.io/add-material",
+        "http://34.44.189.201/add-material",
         dataToSend,
         {
           headers: {
@@ -88,16 +92,9 @@ const AddMaterialModal = ({ visible, onClose, onSuccess, initialData }) => {
                 {labelMap[key]}
               </label>
               <input
-                type={key === "unit_price" ? "number" : "text"}
+                type="text"
                 value={value}
-                onChange={(e) =>
-                  handleChange(
-                    key,
-                    key === "unit_price"
-                      ? parseFloat(e.target.value)
-                      : e.target.value
-                  )
-                }
+                onChange={(e) => handleChange(key, e.target.value)}
                 placeholder={placeholderMap[key]}
                 readOnly={key === "supplier_name"}
                 className={`border px-3 py-2 rounded-md ${

@@ -11,6 +11,14 @@ const TopNav = ({ onToggleSidebar }) => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
+    if (!storedUsername) {
+      Cookies.remove("access_token");
+      localStorage.clear();
+      navigate("/login");
+    }
+  }, [navigate, storedUsername]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
@@ -40,7 +48,7 @@ const TopNav = ({ onToggleSidebar }) => {
           className="flex items-center focus:outline-none"
         >
           <IoPersonCircleOutline className="w-8 h-8 text-gray-600" />
-          <span className="ml-2">{storedUsername || "Guest"}</span>
+          <span className="ml-2">{storedUsername}</span>
         </button>
 
         {dropdownOpen && (

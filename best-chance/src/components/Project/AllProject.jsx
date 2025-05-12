@@ -41,7 +41,7 @@ const AllProject = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://bestchance-accounting-cui.virpluz.io/read-all-projects",
+        "http://34.44.189.201/read-all-projects",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -73,7 +73,7 @@ const AllProject = () => {
     setIsDeleting(true);
     try {
       const response = await axios.delete(
-        `https://bestchance-accounting-cui.virpluz.io/delete-project-only/${projectId.project_no}`,
+        `http://34.44.189.201/delete-project-only/${projectId.project_no}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -188,13 +188,13 @@ const AllProject = () => {
   };
 
   const dropdownOptions = [
-    { type: "sort", field: "projectNo", label: "工程编号" },
+    { type: "sort", field: "projectNo", label: "工程編號" },
     { type: "sort", field: "contact", label: "聯絡人" },
-    { type: "sort", field: "date", label: "开始日期" },
+    { type: "sort", field: "date", label: "開始日期" },
   ];
 
   return (
-    <div className="p-4 min-h-[calc(100vh-120px)] bg-[rgba(0,0,0,0.04)] rounded-[10px]">
+    <div className="p-4 min-h-[calc(100vh-120px)] bg-gray-100 rounded-lg flex flex-col">
       <h1 className="text-center font-bold my-6 text-[25px]">所有項目</h1>
       <div className="mb-4 flex flex-col items-center gap-2">
         <div className="w-full px-4 sm:px-0 sm:w-[90vw] md:w-[80vw] lg:w-[70vw] xl:w-[60vw] flex gap-2">
@@ -214,9 +214,9 @@ const AllProject = () => {
           >
             {`排序: ${
               sortConfig.field === "date"
-                ? "开始日期"
+                ? "開始日期"
                 : sortConfig.field === "projectNo"
-                ? "工程编号"
+                ? "工程編號"
                 : "聯絡人"
             } ${sortConfig.direction === "asc" ? "↑" : "↓"}`}
             <svg
@@ -305,17 +305,17 @@ const AllProject = () => {
                 </div>
 
                 <h3 className="text-lg font-semibold mb-1 truncate pr-6">
-                  <span>工程地点:</span>{" "}
+                  <span>工程地點:</span>{" "}
                   {`${item.project_location.district}, ${item.project_location.street_address}, ${item.project_location.building}`}
                 </h3>
                 <p className="text-gray-600 mb-1">
-                  工程编号: {item.project_no}
+                  工程編號: {item.project_no}
                 </p>
                 <p className="text-gray-600 mb-1">
                   <span className="font-medium">聯絡人:</span> {item.contact}
                 </p>
                 <p className="text-gray-600">
-                  <span className="font-medium">开始日期:</span>{" "}
+                  <span className="font-medium">開始日期:</span>{" "}
                   {item.start_date}
                 </p>
               </div>
@@ -349,7 +349,7 @@ const AllProject = () => {
 
       {showDeleteModal && (
         <ConfirmDeleteModal
-          productName={`工程地点: ${projectToDelete.project_location.district}, ${projectToDelete.project_location.street_address}, ${projectToDelete.project_location.building}`}
+          productName={`工程地點: ${projectToDelete.project_location.district}, ${projectToDelete.project_location.street_address}, ${projectToDelete.project_location.building}`}
           page={"project"}
           onConfirm={() => handleDelete(projectToDelete)}
           onCancel={() => {

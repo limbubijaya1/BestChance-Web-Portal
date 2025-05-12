@@ -13,15 +13,12 @@ const FleetOrder = () => {
     const token = Cookies.get("access_token");
     setLoading(true);
     try {
-      const response = await axios.get(
-        "https://bestchance-accounting-cui.virpluz.io/read-fleets",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      const response = await axios.get("http://34.44.189.201/read-fleets", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       setItems(response.data.all_fleet);
     } catch (error) {
       console.error("Error fetching vendors:", error);

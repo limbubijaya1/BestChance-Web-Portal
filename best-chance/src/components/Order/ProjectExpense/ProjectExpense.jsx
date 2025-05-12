@@ -40,7 +40,7 @@ const ProjectExpense = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://bestchance-accounting-cui.virpluz.io/read-project-expenses/${projectID}`,
+        `http://34.44.189.201/read-project-expenses/${projectID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,18 +64,15 @@ const ProjectExpense = () => {
   const handleDeleteExpense = async () => {
     const token = Cookies.get("access_token");
     try {
-      await axios.delete(
-        "https://bestchance-accounting-cui.virpluz.io/delete-expense-items",
-        {
-          data: {
-            each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      await axios.delete("http://34.44.189.201/delete-expense-items", {
+        data: {
+          each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       fetchOperationExpenses(); // Refresh the list
       setIsDeleteModalOpen(false);
     } catch (error) {
@@ -151,7 +148,7 @@ const ProjectExpense = () => {
     return (
       <>
         <th
-          className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sticky top-0 bg-gray-50 z-10"
+          className="px-4 min-w-[200px] py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sticky top-0 bg-gray-50 z-10"
           onClick={() => requestSort("expense_name")}
           style={{ width: columnWidths.expense_name }}
         >
@@ -191,7 +188,7 @@ const ProjectExpense = () => {
         </th>
 
         <th
-          className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sticky top-0 bg-gray-50 z-10"
+          className="px-4 min-w-[80px] py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 sticky top-0 bg-gray-50 z-10"
           onClick={() => requestSort("qty")}
           style={{ width: columnWidths.qty }}
         >
@@ -205,7 +202,7 @@ const ProjectExpense = () => {
           </div>
         </th>
         <th
-          className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50 z-10"
+          className="px-4 min-w-[80px] py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50 z-10"
           style={{ width: columnWidths.unit }}
         >
           單位
@@ -250,7 +247,7 @@ const ProjectExpense = () => {
     return (
       <>
         <td
-          className="px-4 py-4 whitespace-nowrap text-sm text-gray-900"
+          className="px-4 min-w-[200px] py-4 whitespace-nowrap text-sm text-gray-900"
           style={{ width: columnWidths.expense_name }}
         >
           {record.expense_name}
@@ -399,10 +396,10 @@ const ProjectExpense = () => {
         </div>
 
         {/* Filter buttons */}
-        <div className="flex gap-2 mt-2">
+        <div className="flex mt-2">
           <button
             onClick={() => setActiveFilter("all")}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 text-[13px] sm:text-[16px] mx-1 rounded-lg ${
               activeFilter === "all" ? "bg-blue-500 text-white" : "bg-gray-200"
             }`}
           >
@@ -410,7 +407,7 @@ const ProjectExpense = () => {
           </button>
           <button
             onClick={() => setActiveFilter("material")}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 text-[13px] sm:text-[16px] mx-1 rounded-lg ${
               activeFilter === "material"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200"
@@ -420,7 +417,7 @@ const ProjectExpense = () => {
           </button>
           <button
             onClick={() => setActiveFilter("fleet")}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 text-[13px] sm:text-[16px] mx-1 rounded-lg ${
               activeFilter === "fleet"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200"
@@ -430,7 +427,7 @@ const ProjectExpense = () => {
           </button>
           <button
             onClick={() => setActiveFilter("operation")}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 text-[13px] sm:text-[16px] mx-1 rounded-lg ${
               activeFilter === "operation"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200"

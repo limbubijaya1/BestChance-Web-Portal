@@ -32,9 +32,11 @@ const CombinedOrderPage = () => {
       <OrderSidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
 
       {/* Main Content */}
-      <div className="flex-1">
-        <TopNav onToggleSidebar={toggleSidebar} />
-        <main className="p-5">
+      <div className="flex-1 flex flex-col min-w-0">
+        <div className="w-full flex-shrink-0">
+          <TopNav onToggleSidebar={toggleSidebar} />
+        </div>
+        <main className="p-5 flex-1 overflow-auto">
           <CombinedOrder />
         </main>
       </div>

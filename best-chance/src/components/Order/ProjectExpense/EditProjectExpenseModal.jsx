@@ -6,7 +6,6 @@ const EditProjectExpenseModal = ({ isOpen, onClose, expense, onSuccess }) => {
   const [expenseName, setExpenseName] = useState("");
   const [unitPrice, setUnitPrice] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState("");
 
@@ -30,6 +29,14 @@ const EditProjectExpenseModal = ({ isOpen, onClose, expense, onSuccess }) => {
   const validate = () => {
     const newErrors = {};
     if (!expenseName.trim()) newErrors.expenseName = "費用名稱不能為空";
+    if (!unitPrice) {
+       newErrors.unitPrice = "請輸入價格";
+    } else if (isNaN(unitPrice)) {
+       newErrors.unitPrice = "單價必須為數字";
+    } else if (unitPrice <= 0) {
+       newErrors.unitPrice = "單價唔可以小於或等於零";
+    }
+
     if (unitPrice === "" || isNaN(unitPrice))
       newErrors.unitPrice = "單價不能為空";
     setErrors(newErrors);
@@ -53,7 +60,7 @@ const EditProjectExpenseModal = ({ isOpen, onClose, expense, onSuccess }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://bestchance-accounting-cui.virpluz.io/update-expense-price",
+        "http://34.44.189.201/update-expense-price",
         {
           each_expense_id: expense.each_expense_id,
           expense_name: expenseName,
@@ -102,12 +109,13 @@ const EditProjectExpenseModal = ({ isOpen, onClose, expense, onSuccess }) => {
         <div className="mb-4">
           <label className="block text-sm font-medium">單價</label>
           <input
-            type="number"
+            type="text"
             value={unitPrice}
             onChange={(e) => setUnitPrice(e.target.value)}
             className={`w-full mt-1 p-2 border rounded ${
               errors.unitPrice ? "border-red-500" : ""
             }`}
+            placeholder="例如：123.45"
           />
           {errors.unitPrice && (
             <p className="text-red-500 text-sm mt-1">{errors.unitPrice}</p>

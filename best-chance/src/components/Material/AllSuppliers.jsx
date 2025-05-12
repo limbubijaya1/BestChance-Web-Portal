@@ -34,7 +34,7 @@ const AllSuppliers = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://bestchance-accounting-cui.virpluz.io/read-all-suppliers-with-materials",
+        "http://34.44.189.201/read-all-suppliers-with-materials",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const AllSuppliers = () => {
 
     try {
       const response = await axios.delete(
-        `https://bestchance-accounting-cui.virpluz.io/delete-material/${material.material_id}`,
+        `http://34.44.189.201/delete-material/${material.material_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -173,24 +173,24 @@ const AllSuppliers = () => {
                       <thead className="bg-gray-50">
                         <tr>
                           <th
-                            className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                            className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-[200px] sm:w-[340px] md:w-[370px] lg:w-[480px] xl:w-[520px] flex"
                             onClick={() => requestSort("material_name")}
                           >
                             材料名稱
                           </th>
                           <th
-                            className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-[80px]"
+                            className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer min-w-[60px]"
                             onClick={() => requestSort("unit")}
                           >
                             單位
                           </th>
                           <th
-                            className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer w-[100px]"
+                            className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer min-w-[100px]"
                             onClick={() => requestSort("unit_price")}
                           >
                             單價 (HKD)
                           </th>
-                          <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-[50px]"></th>
+                          <th className=" py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[20px]"></th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
@@ -200,16 +200,16 @@ const AllSuppliers = () => {
                                 key={item.material_name}
                                 className="hover:bg-gray-50"
                               >
-                                <td className="px-4 py-4 text-sm text-gray-700 w-[190px] sm:w-[340px] md:w-[370px] lg:w-[480px] xl:w-[520px] flex  ">
+                                <td className="px-4 py-4 text-sm text-gray-700 w-full sm:w-[340px] md:w-[370px] lg:w-[480px] xl:w-[520px] flex">
                                   {item.material_name}
                                 </td>
-                                <td className="px-4 py-4 text-center text-sm text-gray-700 ">
+                                <td className="px-4 py-4 text-center text-sm text-gray-700">
                                   {item.unit}
                                 </td>
                                 <td className="px-4 py-4 text-center text-sm text-gray-700">
                                   ${item.unit_price}
                                 </td>
-                                <td className="relative pr-8 py-4 text-center text-sm w-[40px]">
+                                <td className="relative py-4 text-center text-sm">
                                   <button
                                     onClick={() =>
                                       setOpenDropdownMenu(

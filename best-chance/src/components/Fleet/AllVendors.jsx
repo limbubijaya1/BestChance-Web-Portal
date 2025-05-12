@@ -22,15 +22,12 @@ const AllVendors = () => {
     const token = Cookies.get("access_token");
     setLoading(true);
     try {
-      const response = await axios.get(
-        "https://bestchance-accounting-cui.virpluz.io/read-fleets",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+      const response = await axios.get("http://34.44.189.201/read-fleets", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
       setItems(response.data.all_fleet);
     } catch (error) {
       console.error("Error fetching vendors:", error);
@@ -42,17 +39,14 @@ const AllVendors = () => {
   const deleteFleet = async (fleetId) => {
     const token = Cookies.get("access_token");
     try {
-      await axios.delete(
-        `https://bestchance-accounting-cui.virpluz.io/delete-fleet`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          data: { fleet_id: fleetId.fleet_id },
-        }
-      );
+      await axios.delete(`http://34.44.189.201/delete-fleet`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: { fleet_id: fleetId.fleet_id },
+      });
       fetchFleet();
     } catch (err) {
       console.error("Delete error:", err);
@@ -123,7 +117,7 @@ const AllVendors = () => {
                       (header, idx) => (
                         <th
                           key={idx}
-                          className="px-4 py-3 min-w-[80px] text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                          className="px-4 py-3 min-w-[100px] text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                           onClick={() => requestSort(header.toLowerCase())}
                         >
                           {header}
@@ -158,7 +152,7 @@ const AllVendors = () => {
                           {item[key] || "無"}
                         </td>
                       ))}
-                      <td className="relative pr-8 py-4 text-center text-sm w-[40px]">
+                      <td className="relative py-4 text-center text-sm w-[20px]">
                         <button
                           onClick={() =>
                             setOpenDropdownMenu(

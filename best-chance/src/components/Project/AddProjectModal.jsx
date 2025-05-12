@@ -80,7 +80,7 @@ const AddProjectModal = ({ isOpen, onClose, onSuccess }) => {
 
     try {
       const response = await axios.post(
-        "https://bestchance-accounting-cui.virpluz.io/add-project",
+        "http://34.44.189.201/add-project",
         addFormData,
         {
           headers: {
@@ -147,7 +147,7 @@ const AddProjectModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
+      <div className="bg-white rounded-lg p-6 w-[90vw] sm:w-full max-w-md">
         <h2 className="text-xl font-bold mb-4 flex justify-center">新增項目</h2>
         <form onSubmit={handleAddSubmit}>
           <div className="mb-4">
