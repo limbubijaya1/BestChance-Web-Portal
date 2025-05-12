@@ -80,7 +80,7 @@ const AddProjectModal = ({ isOpen, onClose, onSuccess }) => {
 
     try {
       const response = await axios.post(
-        "http://34.44.189.201/add-project",
+        "https://bestchance-accounting-cui.virpluz.io/add-project",
         addFormData,
         {
           headers: {

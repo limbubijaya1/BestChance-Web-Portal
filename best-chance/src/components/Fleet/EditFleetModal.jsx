@@ -92,7 +92,7 @@ const EditFleetModal = ({
       };
 
       await axios.patch(
-        `http://34.44.189.201/update-fleet/${currentEdit.id}`,
+        `https://bestchance-accounting-cui.virpluz.io/update-fleet/${currentEdit.id}`,
         fleetData,
         {
           headers: {

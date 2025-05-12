@@ -14,7 +14,7 @@ const AllCostAnalysis = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://34.44.189.201/read-monthly-expenses",
+        "https://bestchance-accounting-cui.virpluz.io/read-monthly-expenses",
         {
           headers: {
             Authorization: `Bearer ${token}`,

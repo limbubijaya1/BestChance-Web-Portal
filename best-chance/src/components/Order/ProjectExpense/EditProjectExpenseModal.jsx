@@ -30,11 +30,11 @@ const EditProjectExpenseModal = ({ isOpen, onClose, expense, onSuccess }) => {
     const newErrors = {};
     if (!expenseName.trim()) newErrors.expenseName = "費用名稱不能為空";
     if (!unitPrice) {
-       newErrors.unitPrice = "請輸入價格";
+      newErrors.unitPrice = "請輸入價格";
     } else if (isNaN(unitPrice)) {
-       newErrors.unitPrice = "單價必須為數字";
+      newErrors.unitPrice = "單價必須為數字";
     } else if (unitPrice <= 0) {
-       newErrors.unitPrice = "單價唔可以小於或等於零";
+      newErrors.unitPrice = "單價唔可以小於或等於零";
     }
 
     if (unitPrice === "" || isNaN(unitPrice))
@@ -60,7 +60,7 @@ const EditProjectExpenseModal = ({ isOpen, onClose, expense, onSuccess }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://34.44.189.201/update-expense-price",
+        "https://bestchance-accounting-cui.virpluz.io/update-expense-price",
         {
           each_expense_id: expense.each_expense_id,
           expense_name: expenseName,

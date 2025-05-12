@@ -59,7 +59,7 @@ const AddMaterialModal = ({ visible, onClose, onSuccess, initialData }) => {
 
     try {
       const response = await axios.post(
-        "http://34.44.189.201/add-material",
+        "https://bestchance-accounting-cui.virpluz.io/add-material",
         dataToSend,
         {
           headers: {

@@ -40,7 +40,7 @@ const ProjectExpense = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://34.44.189.201/read-project-expenses/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/read-project-expenses/${projectID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -64,15 +64,18 @@ const ProjectExpense = () => {
   const handleDeleteExpense = async () => {
     const token = Cookies.get("access_token");
     try {
-      await axios.delete("http://34.44.189.201/delete-expense-items", {
-        data: {
-          each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      });
+      await axios.delete(
+        "https://bestchance-accounting-cui.virpluz.io/delete-expense-items",
+        {
+          data: {
+            each_expense_ids: [{ each_expense_id: expenseToDelete.id }],
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
       fetchOperationExpenses(); // Refresh the list
       setIsDeleteModalOpen(false);
     } catch (error) {

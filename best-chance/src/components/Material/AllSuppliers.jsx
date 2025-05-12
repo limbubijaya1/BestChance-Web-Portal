@@ -34,7 +34,7 @@ const AllSuppliers = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://34.44.189.201/read-all-suppliers-with-materials",
+        "https://bestchance-accounting-cui.virpluz.io/read-all-suppliers-with-materials",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const AllSuppliers = () => {
 
     try {
       const response = await axios.delete(
-        `http://34.44.189.201/delete-material/${material.material_id}`,
+        `https://bestchance-accounting-cui.virpluz.io/delete-material/${material.material_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

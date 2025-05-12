@@ -73,7 +73,7 @@ const MaterialOrderConfirmation = () => {
     try {
       const token = Cookies.get("access_token");
       const response = await axios.post(
-        `http://34.44.189.201/order-material/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/order-material/${projectID}`,
         requestBody,
         {
           headers: {

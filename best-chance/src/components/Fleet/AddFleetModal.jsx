@@ -53,12 +53,16 @@ const AddFleetModal = ({ open, onClose, onSuccess }) => {
 
     try {
       const token = Cookies.get("access_token");
-      await axios.post("http://34.44.189.201/add-fleet", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      });
+      await axios.post(
+        "https://bestchance-accounting-cui.virpluz.io/add-fleet",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
       setSuccess(true);
       onSuccess();
       setTimeout(() => {

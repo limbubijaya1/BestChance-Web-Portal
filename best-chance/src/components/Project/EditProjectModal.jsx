@@ -71,7 +71,7 @@ const EditProjectModal = ({ isOpen, onClose, project, onSuccess }) => {
 
     try {
       const response = await axios.patch(
-        `http://34.44.189.201/update-project/${project.project_no}`,
+        `https://bestchance-accounting-cui.virpluz.io/update-project/${project.project_no}`,
         formData,
         {
           headers: {

@@ -41,7 +41,7 @@ const AllProject = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://34.44.189.201/read-all-projects",
+        "https://bestchance-accounting-cui.virpluz.io/read-all-projects",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -73,7 +73,7 @@ const AllProject = () => {
     setIsDeleting(true);
     try {
       const response = await axios.delete(
-        `http://34.44.189.201/delete-project-only/${projectId.project_no}`,
+        `https://bestchance-accounting-cui.virpluz.io/delete-project-only/${projectId.project_no}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

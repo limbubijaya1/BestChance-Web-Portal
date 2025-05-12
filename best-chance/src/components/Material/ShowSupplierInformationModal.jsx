@@ -163,7 +163,7 @@ const ShowSupplierInformationModal = ({
       };
 
       const response = await axios.patch(
-        `http://34.44.189.201/update-supplier/${formData.supplier_id}`,
+        `https://bestchance-accounting-cui.virpluz.io/update-supplier/${formData.supplier_id}`,
         payload,
         {
           headers: {
@@ -199,7 +199,7 @@ const ShowSupplierInformationModal = ({
     try {
       const token = Cookies.get("access_token");
       await axios.delete(
-        `http://34.44.189.201/delete-supplier/${formData.supplier_id}`,
+        `https://bestchance-accounting-cui.virpluz.io/delete-supplier/${formData.supplier_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

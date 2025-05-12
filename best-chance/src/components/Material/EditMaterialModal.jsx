@@ -52,7 +52,7 @@ const EditMaterialModal = ({ initialData, onClose, onSuccess }) => {
     try {
       const token = Cookies.get("access_token");
       const response = await axios.patch(
-        `http://34.44.189.201/update-material/${initialData.material_id}`,
+        `https://bestchance-accounting-cui.virpluz.io/update-material/${initialData.material_id}`,
         formData,
         {
           headers: {

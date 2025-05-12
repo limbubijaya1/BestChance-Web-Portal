@@ -36,7 +36,7 @@ const CombinedOrderConfirmation = () => {
     try {
       const token = Cookies.get("access_token");
       const res = await axios.get(
-        "http://34.44.189.201/read-all-supplier-locations",
+        "https://bestchance-accounting-cui.virpluz.io/read-all-supplier-locations",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -128,7 +128,7 @@ const CombinedOrderConfirmation = () => {
     try {
       const token = Cookies.get("access_token");
       const response = await axios.post(
-        `http://34.44.189.201/order-fleet-with-materials/${projectID}`,
+        `https://bestchance-accounting-cui.virpluz.io/order-fleet-with-materials/${projectID}`,
         requestBody,
         {
           headers: {
